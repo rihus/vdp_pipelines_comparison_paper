@@ -97,7 +97,7 @@ hrar_bxp <- connected_bxp(N4_rdr_hrar, "Subject_id", "AnalysisMethod", "VDP",
 adpt_bxp <- connected_bxp(N4_rdr_adpt, "Subject_id", "AnalysisMethod", "VDP",
                                 c(0, 35), cbPalette[c(6, 3)], "", y_label)
 prcnt_bxp <- connected_bxp(N4_rdr_prcnt, "Subject_id", "AnalysisMethod", "VDP",
-                                c(0, 70), cbPalette[c(6, 4)], "", y_label)
+                                c(0, 72), cbPalette[c(6, 4)], "", y_label)
 medn_bxp <- connected_bxp(N4_rdr_medn, "Subject_id", "AnalysisMethod", "VDP",
                                 c(0, 35), cbPalette[c(6, 5)], "", y_label)
 ##Calculate and add p-value to the plot
@@ -107,7 +107,7 @@ hrar_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", hrar_bxp, 29,
                            tst = "wilcox", paird = TRUE, addp_eq=FALSE)
 adpt_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", adpt_bxp, 29,
                          tst = "wilcox", paird = TRUE, addp_eq=FALSE)
-prcnt_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", prcnt_bxp, 29,
+prcnt_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", prcnt_bxp, 67,
                          tst = "wilcox", paird = TRUE, addp_eq=FALSE)
 medn_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", medn_bxp, 29,
                          tst = "wilcox", paird = TRUE, addp_eq=FALSE)
@@ -116,41 +116,14 @@ medn_bxp_p <- calc_add_p(N4_rdr_thrsh, "AnalysisMethod", "VDP", medn_bxp, 29,
 ggsave("./zR_plots_4abs/gre_vdp_rdr_thresh_bxp.png", plot = thresh_bxp, width = 4.5, height = 3.7, dpi = 300)
 ggsave("./zR_plots_4abs/gre_vdp_rdr_thresh_bxp_p.png", plot = thresh_bxp_p, width = 4.5, height = 3.7, dpi = 300)
 
+ggsave("./zR_plots_4abs/gre_vdp_rdr_hrar_bxp.png", plot = hrar_bxp, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/gre_vdp_rdr_hrar_bxp_p.png", plot = hrar_bxp_p, width = 4.5, height = 3.7, dpi = 300)
 
+ggsave("./zR_plots_4abs/gre_vdp_rdr_adpt_bxp.png", plot = adpt_bxp, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/gre_vdp_rdr_adpt_bxp_p.png", plot = adpt_bxp_p, width = 4.5, height = 3.7, dpi = 300)
 
+ggsave("./zR_plots_4abs/gre_vdp_rdr_prcnt_bxp.png", plot = prcnt_bxp, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/gre_vdp_rdr_prcnt_bxp_p.png", plot = prcnt_bxp_p, width = 4.5, height = 3.7, dpi = 300)
 
-
-###############################################################################
-# # ##Statistical test
-# vdp_stat.test <- N4_rdr_thrsh %>%
-#   wilcox_test(VDP ~ AnalysisMethod, paired = TRUE) %>%
-#   add_significance()
-# vdp_stat.test
-
-# # Box plots with p-values SNR
-# vdpmed_bxp <-  ggpaired(N4_rdr_thresh, x = "Analysis_Method", y = "VDP",
-#                         fill = "Analysis_Method", palette = c("#e69f00", "#56b4e9"),
-#                         width = 0.5, ylim = c(0, 35), line.color = "Analysis_Method",
-#                         line.size = 0.5,legend = "none", xlab = "") + # Sequence
-#   ylab(y_label) +
-#   # geom_point(aes(color = Category), shape = 19, size = 3) +
-#   scale_color_manual(values = c("#000000", "#009e73")) +
-#   theme(panel.border = element_rect(color = "#000000", fill = NA, linewidth = 1),
-#         axis.text = element_text(size = 22, color = "#000000", face = "bold"),
-#         axis.title = element_text(size = 22, color = "#000000", face = "bold"),
-#         axis.line.x = element_line(linewidth = 1), axis.line.y = element_line(linewidth = 1)
-#   )
-# vdpmed_bxp
-# 
-# 
-# vdp_stat.test <- vdp_stat.test %>% add_xy_position(x = "Analysis_Method")
-# vdpmed_bxp_p <-  vdpmed_bxp + stat_pvalue_manual(vdp_stat.test, label = "p{scales::pvalue(p)}",
-#                                          y.position = 29, label.size = 8, bracket.size = 0.8,
-#                                          tip.length = 0.03, vjust=-0.35)
-# vdpmed_bxp_p
-# # Save the plot as a png file in the specified directory
-# ggsave("./zR_plots_4ppr/cartVSspir_vdp_bxp_nop.png", plot = vdpmed_bxp, width = 4.5, height = 3.7, dpi = 300)
-# ggsave("./zR_plots_4ppr/cartVSspir_vdp_bxp_p.png", plot = vdpmed_bxp_p, width = 4.5, height = 3.7, dpi = 300)
-
-
-
+ggsave("./zR_plots_4abs/gre_vdp_rdr_medn_bxp.png", plot = medn_bxp, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/gre_vdp_rdr_medn_bxp_p.png", plot = medn_bxp_p, width = 4.5, height = 3.7, dpi = 300)
