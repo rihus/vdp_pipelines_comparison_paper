@@ -22,7 +22,7 @@ N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral/vdp_analysis_results_Septem
 ##Apply Shapiro-Wilk test to each column (excluding Subject_id)
 shapiro_fa <- apply(FA_spir_cf_vdps[, -1], 2, shapiro.test)
 shapiro_n4 <- apply(N4_spir_cf_vdps[, -1], 2, shapiro.test)
-# Extracting the p-values
+# #Extracting the p-values
 fa_p_values <- sapply(shapiro_fa, function(x) x$p.value)
 n4_p_values <- sapply(shapiro_n4, function(x) x$p.value)
 ##[p-value > 0.05 = normal; p-value < 0.05 = non-normal]
@@ -34,7 +34,6 @@ FA_data_long <- FA_spir_cf_vdps %>%
   pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "VDP")
 N4_data_long <- N4_spir_cf_vdps %>%
   pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "VDP")
-
 
 # Calculate Mean and SD for each Analysis_Method
 summary_FA <- FA_data_long %>%
