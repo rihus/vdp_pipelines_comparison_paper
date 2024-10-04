@@ -16,8 +16,8 @@ cbPalette <- c("#999999","#E69F00","#CC79A7","#F0E442","#56B4E9","#009E73","#007
 plt_order <- c("Thresholding","Hierarchical","Adaptive","Percentile","Median") # ,"Reader"
 ################################################################################
 # ##Load the data from both CSV files and arrange it to plot
-FA_spir_h_vdps <- read.csv("./IRC740H_visit1_spiral_healthy/vdp_analysis_results_September2024/FA_combined_vdps.csv")
-N4_spir_h_vdps <- read.csv("./IRC740H_visit1_spiral_healthy/vdp_analysis_results_September2024/N4_combined_vdps.csv")
+FA_spir_h_vdps <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_September2024/FA_combined_vdps.csv")
+N4_spir_h_vdps <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_September2024/N4_combined_vdps.csv")
 
 ##Apply Shapiro-Wilk test to each column (excluding Subject_id)
 shapiro_fa <- apply(FA_spir_h_vdps[, -1], 2, shapiro.test)
