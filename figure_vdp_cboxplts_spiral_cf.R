@@ -74,8 +74,8 @@ calc_add_p <- function(data_in, x_var, y_var, fig_handle, py_pos,
 
 ################################################################################
 # ##Load the data from both CSV files and arrange it to plot
-N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_September2024/N4_combined_vdps.csv")
-FA_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_September2024/FA_combined_vdps.csv")
+N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_October2024/N4_combined_vdps.csv")
+FA_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_October2024/FA_combined_vdps.csv")
 
 ##Reshape Data to Long Format for ggplot2
 N4_long <- N4_spir_cf_vdps %>%
@@ -101,8 +101,8 @@ FA_rdr_prcnt <- FA_long %>% filter(AnalysisMethod %in% c("Reader", "Percentile")
 FA_rdr_medn <- FA_long %>% filter(AnalysisMethod %in% c("Reader", "Median"))
 
 ##Define y-label of the plot
-ylabeln4 <- expression(bold(VDP[Spiral-N4]* "(%)"))
-ylabelfa <- expression(bold(VDP[Spiral-FA]* "(%)"))
+ylabeln4 <- expression(bold(VDP[N4]* "(%)")) # [Spiral]
+ylabelfa <- expression(bold(VDP[FA]* "(%)"))
 ##############################################
 thresh_bxp_n4 <- connected_bxp(N4_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
                                c(0, 40), cbPalette[c(6, 1)], "", ylabeln4)
