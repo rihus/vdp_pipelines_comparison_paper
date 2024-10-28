@@ -46,10 +46,12 @@ calc_pval <- function(data_in, x_var, y_var, tst = "wilcox", paired = TRUE) {
   if (tst == "wilcox") {
     pval <- data_in %>%
       wilcox_test(formula, paired = paired) %>%
+      adjust_pvalue(method = 'bonferroni') %>%
       add_significance()
   } else if (tst == "ttest") {
     pval <- data_in %>%
       t_test(formula, paired = paired) %>%
+      adjust_pvalue(method = 'bonferroni') %>%
       add_significance()
   } else {
     print("For tst only Wilcoxon (wilcox) or T-test (ttest) are accepted")
@@ -62,9 +64,9 @@ calc_add_p <- function(data_in, x_var, y_var, fig_handle, py_pos,
                        tst = "wilcox", paird = TRUE, addp_eq=FALSE) {
   p_thresh <- calc_pval(data_in, x_var, y_var, tst, paird)
   p_thresh <- p_thresh %>% add_xy_position(x = x_var)
-  if (addp_eq == TRUE) {plabel = "p={scales::pvalue(p)}"}
-  else {plabel = "p{scales::pvalue(p)}"}
-  bxp_p <- fig_handle + stat_pvalue_manual(p_thresh, label = plabel,
+  # if (addp_eq == TRUE) {plabel = "p={scales::pvalue(p)}"}
+  # else {plabel = "p{scales::pvalue(p)}"}
+  bxp_p <- fig_handle + stat_pvalue_manual(p_thresh, label = "P = {p.adj}",
                                            y.position = py_pos, label.size = 8,
                                            bracket.size = 0.8,
                                            tip.length = 0.03, vjust=-0.35)
@@ -101,8 +103,8 @@ FA_rdr_prcnt <- FA_long %>% filter(AnalysisMethod %in% c("Reader", "Percentile")
 FA_rdr_medn <- FA_long %>% filter(AnalysisMethod %in% c("Reader", "Median"))
 
 ##Define y-label of the plot
-ylabeln4 <- expression(bold(VDP[N4]* "(%)")) # [Spiral]
-ylabelfa <- expression(bold(VDP[FA]* "(%)"))
+ylabeln4 <- expression(bold(VDP[N4]*" " *"(%)")) # [Spiral]
+ylabelfa <- expression(bold(VDP[FA]*" " *"(%)"))
 ##############################################
 thresh_bxp_n4 <- connected_bxp(N4_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
                                c(0, 40), cbPalette[c(6, 1)], "", ylabeln4)
@@ -149,25 +151,26 @@ medn_bxp_fa_p <- calc_add_p(FA_rdr_medn, "AnalysisMethod", "VDP", medn_bxp_fa,
                             35, tst = "wilcox", paird = TRUE, addp_eq=FALSE)
 
 ##Save figures, with/without p value
-ggsave("./zR_plots_4abs/spir_vdp_rdr_thresh_bxp_n4.png", plot = thresh_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_thresh_bxp_n4_p.png", plot = thresh_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_hrar_bxp_n4.png", plot = hrar_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_hrar_bxp_n4_p.png", plot = hrar_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_adpt_bxp_n4.png", plot = adpt_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_adpt_bxp_n4_p.png", plot = adpt_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_prcnt_bxp_n4.png", plot = prcnt_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_prcnt_bxp_n4_p.png", plot = prcnt_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_medn_bxp_n4.png", plot = medn_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_medn_bxp_n4_p.png", plot = medn_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_thresh_bxp_n4.png", plot = thresh_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_thresh_bxp_n4_p.png", plot = thresh_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_hrar_bxp_n4.png", plot = hrar_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_hrar_bxp_n4_p.png", plot = hrar_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_adpt_bxp_n4.png", plot = adpt_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_adpt_bxp_n4_p.png", plot = adpt_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_prcnt_bxp_n4.png", plot = prcnt_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_prcnt_bxp_n4_p.png", plot = prcnt_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_medn_bxp_n4.png", plot = medn_bxp_n4, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_medn_bxp_n4_p.png", plot = medn_bxp_n4_p, width = 4.5, height = 3.7, dpi = 300)
 
-ggsave("./zR_plots_4abs/spir_vdp_rdr_thresh_bxp_fa.png", plot = thresh_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_thresh_bxp_fa_p.png", plot = thresh_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_hrar_bxp_fa.png", plot = hrar_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_hrar_bxp_fa_p.png", plot = hrar_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_adpt_bxp_fa.png", plot = adpt_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_adpt_bxp_fa_p.png", plot = adpt_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_prcnt_bxp_fa.png", plot = prcnt_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_prcnt_bxp_fa_p.png", plot = prcnt_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_medn_bxp_fa.png", plot = medn_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/spir_vdp_rdr_medn_bxp_fa_p.png", plot = medn_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_thresh_bxp_fa.png", plot = thresh_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_thresh_bxp_fa_p.png", plot = thresh_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_hrar_bxp_fa.png", plot = hrar_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_hrar_bxp_fa_p.png", plot = hrar_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_adpt_bxp_fa.png", plot = adpt_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_adpt_bxp_fa_p.png", plot = adpt_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_prcnt_bxp_fa.png", plot = prcnt_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_prcnt_bxp_fa_p.png", plot = prcnt_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_medn_bxp_fa.png", plot = medn_bxp_fa, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4abs/spir_vdp_cf_rdr_medn_bxp_fa_p.png", plot = medn_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
 
+##
