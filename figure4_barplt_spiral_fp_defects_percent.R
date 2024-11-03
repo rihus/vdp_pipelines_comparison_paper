@@ -83,15 +83,15 @@ ctrl_fa_bar <- create_barplot(FA_ctrl_long, "Analysis_Method", "pFP",
 friedman.test(pFP ~ Analysis_Method | Subject_id, data = FA_ctrl_long)
 frdAllPairsNemenyiTest(pFP ~ Analysis_Method | Subject_id, data = FA_ctrl_long)
 
-#########################N4
+#########################N4: expression(bold("Mean FP VDP"[N4]* " " *"(%)"))
 cf_n4_bar <- create_barplot(N4_cf_long, "Analysis_Method", "pFP",
-                            expression(bold("Mean FP VDP"[N4]* " " *"(%)")),
+                            "Mean FP VDP (%)",
                "Analysis Method", c(0, 30), cbPalette, "Subject_id", plt_order)
 friedman.test(pFP ~ Analysis_Method | Subject_id, data = N4_cf_long)
 frdAllPairsNemenyiTest(pFP ~ Analysis_Method | Subject_id, data = N4_cf_long)
 
 ctrl_n4_bar <- create_barplot(N4_ctrl_long, "Analysis_Method", "pFP",
-                            expression(bold("Mean FP VDP"[N4]* " " *"(%)")),
+                              "Mean FP VDP (%)",
                             "Analysis Method", c(0, 10), cbPalette, "Subject_id", plt_order)
 friedman.test(pFP ~ Analysis_Method | Subject_id, data = N4_ctrl_long)
 frdAllPairsNemenyiTest(pFP ~ Analysis_Method | Subject_id, data = N4_ctrl_long)
