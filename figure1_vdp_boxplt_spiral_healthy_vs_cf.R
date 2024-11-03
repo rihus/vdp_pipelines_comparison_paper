@@ -67,7 +67,7 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
   ##Add p-value on the plot
   pval <- pval %>% add_xy_position(x = x_in)
   if (addp_eq == TRUE) {plabel = "P={scales::pvalue(p, accuracy = 0.0001)}"}
-  else {plabel = "P{scales::pvalue(p, accuracy = 0.0001)}"}
+  else {plabel = "P{scales::pvalue(p, accuracy = 0.001)}"}
   bxp_p <-  bxp_ + stat_pvalue_manual(pval, label = plabel, #"P = {p.adj}"
                                       y.position=py_pos, label.size = 8,
                                       bracket.size = 0.8, tip.length = 0.025,
