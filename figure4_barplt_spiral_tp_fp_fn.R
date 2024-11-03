@@ -16,7 +16,7 @@ setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_an
 cbPalette <- c("#CC6677", "#882255", "#88CCEE", "#332288", "#999933", "#888888",
                "#AA4499", "#DDCC77", "#661100", "#6699CC", "#44AA99", "#117733")
 ##Define order of the data
-plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile","Median")
+plt_order <- c("Reader", "Hierarchical","Adaptive","Percentile","Thresholding","Median")
 create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
                            barclr, subjs_colname, plt_order){
   # Convert xdata to a factor in the input dataframe if not already
@@ -38,7 +38,7 @@ create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
     theme_bw() +
     ylab(y_label) +
     xlab(x_label) +
-    theme(text = element_text(size = 14, face = "bold"),
+    theme(text = element_text(size = 14, color= "#000000", face = "bold"),
           axis.text.x = element_text(angle = 45, hjust = 1),
           legend.position = "none") +
     scale_fill_manual(values = barclr)
@@ -93,21 +93,21 @@ fa_fn_bar <- create_barplot(FA_fn_long, "Analysis_Method", "FN",
                             "Analysis Method", c(-0.1, 2), cbPalette, "Subject_id", plt_order)
 friedman.test(FN ~ Analysis_Method | Subject_id, data = FA_fn_long)
 frdAllPairsNemenyiTest(FN ~ Analysis_Method | Subject_id, data = FA_fn_long)
-#########################N4
+#########################N4 expression(bold("Mean TP"[N4]* " " *"Fraction"))
 n4_tp_bar <- create_barplot(N4_tp_long, "Analysis_Method", "TP",
-               expression(bold("Mean TP"[N4]* " " *"Fraction")),
+               "TP/Reader",
                "Analysis Method", c(-0.1, 2), cbPalette, "Subject_id", plt_order)
 friedman.test(TP ~ Analysis_Method | Subject_id, data = N4_tp_long)
 frdAllPairsNemenyiTest(TP ~ Analysis_Method | Subject_id, data = N4_tp_long)
 
 n4_fp_bar <- create_barplot(N4_fp_long, "Analysis_Method", "FP",
-                            expression(bold("Mean FP"[N4]* " " *"Fraction")),
-                            "Analysis Method", c(-10, 70), cbPalette, "Subject_id", plt_order)
+                            "FP/Reader",
+                            "Analysis Method", c(-7, 40), cbPalette, "Subject_id", plt_order)
 friedman.test(FP ~ Analysis_Method | Subject_id, data = N4_fp_long)
 frdAllPairsNemenyiTest(FP ~ Analysis_Method | Subject_id, data = N4_fp_long)
 
 n4_fn_bar <- create_barplot(N4_fn_long, "Analysis_Method", "FN",
-                            expression(bold("Mean FN"[N4]* " " *"Fraction")),
+                            "FN/Reader",
                             "Analysis Method", c(-0.1, 2), cbPalette, "Subject_id", plt_order)
 friedman.test(FN ~ Analysis_Method | Subject_id, data = N4_fn_long)
 frdAllPairsNemenyiTest(FN ~ Analysis_Method | Subject_id, data = N4_fn_long)
