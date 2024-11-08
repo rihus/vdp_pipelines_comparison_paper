@@ -42,6 +42,13 @@ connected_bxp <- function(data_in, x_var, y_var, id = "Subject_id", ylim,
 
 calc_pval <- function(data_in, x_var, y_var, tst = "wilcox", paired = TRUE) {
   formula <- as.formula(paste(y_var, "~", x_var))
+  ##Mean +- SD
+  mean_val <- aggregate(formula, data_in, mean)
+  print("Mean")
+  print(mean_val)
+  sd_val <- aggregate(formula, data_in, sd)
+  print("Standard-deviation")
+  print(sd_val)
   ## Statistical test
   pval <- NULL
   if (tst == "wilcox") {
@@ -65,8 +72,8 @@ calc_add_p <- function(data_in, x_var, y_var, fig_handle, py_pos,
                        tst = "wilcox", paird = TRUE, addp_eq=FALSE) {
   p_thresh <- calc_pval(data_in, x_var, y_var, tst, paird)
   p_thresh <- p_thresh %>% add_xy_position(x = x_var)
-  if (addp_eq == TRUE) {plabel = "P={scales::pvalue(p, accuracy = 0.0001)}"}
-  else {plabel = "P{scales::pvalue(p, accuracy = 0.0001)}"}
+  if (addp_eq == TRUE) {plabel = "P={scales::pvalue(p, accuracy = 0.001)}"}
+  else {plabel = "P{scales::pvalue(p, accuracy = 0.001)}"}
   bxp_p <- fig_handle + stat_pvalue_manual(p_thresh, label = plabel,#"P = {p.adj}",
                                            y.position = py_pos, label.size = 8,
                                            bracket.size = 0.8,
