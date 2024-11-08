@@ -28,8 +28,10 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
   ##Paste x, y inputs for statistical tests
   yx_formula <- as.formula(paste(y_in, "~", x_in))
   mean_val <- aggregate(yx_formula, df_in, mean)
+  print("Mean")
   print(mean_val)
   sd_val <- aggregate(yx_formula, df_in, sd)
+  print("Standard-deviation")
   print(sd_val)
   ## Statistical test
   pval <- NULL
@@ -66,7 +68,7 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
   bxp_ <- bxp_ + geom_hline(yintercept = Inf, linetype = "solid")
   ##Add p-value on the plot
   pval <- pval %>% add_xy_position(x = x_in)
-  if (addp_eq == TRUE) {plabel = "P={scales::pvalue(p, accuracy = 0.0001)}"}
+  if (addp_eq == TRUE) {plabel = "P={scales::pvalue(p, accuracy = 0.001)}"}
   else {plabel = "P{scales::pvalue(p, accuracy = 0.001)}"}
   bxp_p <-  bxp_ + stat_pvalue_manual(pval, label = plabel, #"P = {p.adj}"
                                       y.position=py_pos, label.size = 8,
@@ -97,7 +99,7 @@ combined_n4 <- rbind(transform(N4_spir_ctrl, Category="Healthy"),
 
 ##############################Reader VDP
 rdr_vdp <- boxplt(combined_fa, "Category", "Reader", ylabel=expression(bold(VDP[Reader]* " "* "(%)")),
-                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[1], py_pos=31, addp_eq=TRUE)
+                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[1], py_pos=36, addp_eq=FALSE)
 ##############################Box plot: FA VDP (CF vs Healthy)
 fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[Adaptive]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=39, addp_eq=TRUE)
@@ -134,11 +136,11 @@ n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP
 n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[Hierarchical]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=36, addp_eq=TRUE)
 n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[Thresholding]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=36, addp_eq=TRUE)
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=36, addp_eq=FALSE)
 n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[Percentile]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=36, addp_eq=TRUE)
 n4_md <- boxplt(combined_n4, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=36, addp_eq=TRUE)
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=36, addp_eq=FALSE)
 # #Save the plot as a png file in the specified directory
 
 #ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_adp_vdp.png", plot = n4_adp[[1]], width = 4.5, height = 3.7, dpi = 300)
