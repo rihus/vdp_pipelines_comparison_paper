@@ -38,7 +38,7 @@ create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
     theme_bw() +
     ylab(y_label) +
     xlab(x_label) +
-    theme(text = element_text(size = 14, color= "#000000", face = "bold"),
+    theme(text = element_text(size = 18, color= "#000000", face = "bold"),
           axis.text.x = element_text(angle = 45, hjust = 1),
           legend.position = "none") +
     scale_fill_manual(values = barclr)
