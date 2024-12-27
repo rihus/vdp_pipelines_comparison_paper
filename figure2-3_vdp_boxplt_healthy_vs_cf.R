@@ -11,10 +11,11 @@ library(PMCMRplus)
 setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_analysis/analysis_comparisons")
 
 ##Colorblind friendly palette:
-cbPalette <- c("#888888", "#CC6677", "#882255", "#88CCEE", "#332288", "#999933",
-               "#AA4499", "#DDCC77", "#661100", "#6699CC", "#44AA99", "#117733")
+cbPalette <- c("#888888", "#CC6677", "#882255", "#88CCEE", "#332288", "#6699CC",
+               "#999933", "#AA4499", "#DDCC77", "#661100", "#44AA99", "#117733")
 ##Define order of the data -- if needed
-plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile","Median")
+# plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile",
+#                "Mean","Median")
 
 boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
                    bxfill = "white", bxpallet=NULL, pt_clrs=c("#000000", "#009e73"),
@@ -82,11 +83,11 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
 ################################################################################
 # ##Load the data from CSV files and arrange for plotting
 ##CF
-FA_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_October2024/FA_combined_vdps.csv")
-N4_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_October2024/N4_combined_vdps.csv")
+FA_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_vdps.csv")
+N4_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_vdps.csv")
 ##Healthy
-FA_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_October2024/FA_combined_vdps.csv")
-N4_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_October2024/N4_combined_vdps.csv")
+FA_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_December2024/FA_combined_vdps.csv")
+N4_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_December2024/N4_combined_vdps.csv")
 # #Create a combined data frame with an indicator for Correction and Category
 combined_fa <- rbind(transform(FA_spir_ctrl, Category="Healthy"),
                             transform(FA_spir_cf, Category="CF"))
@@ -109,50 +110,58 @@ fa_th <- boxplt(combined_fa, "Category", "Thresholding", ylabel=expression(bold(
                   xlabel="", ylimit=c(0, 35), bxfill= cbPalette[4], py_pos=31, addp_eq=TRUE)
 fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[Percentile]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[5], py_pos=31, addp_eq=TRUE)
-fa_md <- boxplt(combined_fa, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
+fa_mn <- boxplt(combined_fa, "Category", "Mean", ylabel=expression(bold(VDP[Mean]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[6], py_pos=31, addp_eq=TRUE)
+fa_md <- boxplt(combined_fa, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
+                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[7], py_pos=31, addp_eq=TRUE)
 
 
 
 # #Save the plot as a png file in the specified directory
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_rdr_vdp.png", plot = rdr_vdp[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_rdr_vdp_p.png", plot = rdr_vdp[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_adp_vdp.png", plot = fa_adp[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_adp_vdp_p.png", plot = fa_adp[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_hr_vdp.png", plot = fa_hr[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_hr_vdp_p.png", plot = fa_hr[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_thr_vdp.png", plot = fa_th[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_thr_vdp_p.png", plot = fa_th[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_pct_vdp.png", plot = fa_pct[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_pct_vdp_p.png", plot = fa_pct[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_mdn_vdp.png", plot = fa_md[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_FA_mdn_vdp_p.png", plot = fa_md[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_rdr_vdp.png", plot = rdr_vdp[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_rdr_vdp_p.png", plot = rdr_vdp[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_adp_vdp.png", plot = fa_adp[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_adp_vdp_p.png", plot = fa_adp[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_hr_vdp.png", plot = fa_hr[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_hr_vdp_p.png", plot = fa_hr[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_thr_vdp.png", plot = fa_th[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_thr_vdp_p.png", plot = fa_th[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_pct_vdp.png", plot = fa_pct[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_pct_vdp_p.png", plot = fa_pct[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mn_vdp.png", plot = fa_mn[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mn_vdp_p.png", plot = fa_mn[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mdn_vdp.png", plot = fa_md[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mdn_vdp_p.png", plot = fa_md[[2]], width = 4.5, height = 3.7, dpi = 300)
 
 
 
 ##############################Box plot: N4 VDP (CF vs Healthy)
 n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP[Adaptive]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=36, addp_eq=TRUE)
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=34, addp_eq=TRUE)
 n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[Hierarchical]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=36, addp_eq=TRUE)
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=34, addp_eq=TRUE)
 n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[Thresholding]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=36, addp_eq=FALSE)
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=34, addp_eq=FALSE)
 n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[Percentile]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=36, addp_eq=TRUE)
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=34, addp_eq=FALSE)
+n4_mn <- boxplt(combined_n4, "Category", "Mean", ylabel=expression(bold(VDP[Mean]* " "* "(%)")),
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=34, addp_eq=FALSE)
 n4_md <- boxplt(combined_n4, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=36, addp_eq=FALSE)
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[7], py_pos=34, addp_eq=FALSE)
 # #Save the plot as a png file in the specified directory
 
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_adp_vdp.png", plot = n4_adp[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_adp_vdp_p.png", plot = n4_adp[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_hr_vdp.png", plot = n4_hr[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_hr_vdp_p.png", plot = n4_hr[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_thr_vdp.png", plot = n4_th[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_thr_vdp_p.png", plot = n4_th[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_pct_vdp.png", plot = n4_pct[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_pct_vdp_p.png", plot = n4_pct[[2]], width = 4.5, height = 3.7, dpi = 300)
-#ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_mdn_vdp.png", plot = n4_md[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/Healthy_vs_CF_spir_N4_mdn_vdp_p.png", plot = n4_md[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_adp_vdp.png", plot = n4_adp[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_adp_vdp_p.png", plot = n4_adp[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_hr_vdp.png", plot = n4_hr[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_hr_vdp_p.png", plot = n4_hr[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_thr_vdp.png", plot = n4_th[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_thr_vdp_p.png", plot = n4_th[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_pct_vdp.png", plot = n4_pct[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_pct_vdp_p.png", plot = n4_pct[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_mn_vdp.png", plot = n4_mn[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_mn_vdp_p.png", plot = n4_mn[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_mdn_vdp.png", plot = n4_md[[1]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_N4_mdn_vdp_p.png", plot = n4_md[[2]], width = 4.5, height = 3.7, dpi = 300)
 
 
 # ##If want to add mean line on box plot
