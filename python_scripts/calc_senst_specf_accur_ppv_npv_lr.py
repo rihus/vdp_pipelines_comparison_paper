@@ -106,7 +106,7 @@ PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_wo
 ###Specify options
 ANALYSIS_MODE = "Batch" ##Single or Batch modes
 SUBJECT_ID = "IRC740H-002"
-CORR = "FA" # N4, FA
+CORR = "N4" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
@@ -138,12 +138,8 @@ if ANALYSIS_MODE == "Single":
             print(f"Mask {mask} not found or could not be processed.")
     if DEFECTS is None:
         print("No valid defects mask (JP or AB) was found.")
-    # rdr_jp = load_select_defects(SUBJECT_DIR,"img_defect_mask_jp.nii.gz")
     msk_arr = load_select_defects(SUBJECT_DIR, "img_ventilation_mask.nii.gz")
-    # img_arr = load_select_defects(SUBJECT_DIR, "img_ventilation.nii.gz")
-    # img_arr /= np.max(img_arr*msk_arr)
     rdrs_arr = (rdr_rh*msk_arr) + (DEFECTS*msk_arr) == 2
-    # img_n_msk = [img_arr, msk_arr]
     calc_diagnostic_accuracy(rdrs_arr, md_defects, [CORR, "Median"], msk_arr, SUBJECT_DIR)
     calc_diagnostic_accuracy(rdrs_arr, mn_defects, [CORR, "Mean"], msk_arr, SUBJECT_DIR)
     calc_diagnostic_accuracy(rdrs_arr, pct_defcts, [CORR, "Percentile"], msk_arr, SUBJECT_DIR)
@@ -190,12 +186,8 @@ elif ANALYSIS_MODE == "Batch":
                         print(f"Mask {mask} not found or could not be processed.")
                 if DEFECTS is None:
                     print("No valid defects mask (JP or AB) was found.")
-                # rdr_jp = load_select_defects(SUBJECT_DIR,"img_defect_mask_jp.nii.gz")
                 msk_arr = load_select_defects(SUBJECT_DIR, "img_ventilation_mask.nii.gz")
-                # img_arr = load_select_defects(SUBJECT_DIR, "img_ventilation.nii.gz")
-                # img_arr /= np.max(img_arr*msk_arr)
                 rdrs_arr = (rdr_rh*msk_arr) +(DEFECTS*msk_arr) == 2
-                # img_n_msk = [img_arr, msk_arr]
                 calc_diagnostic_accuracy(rdrs_arr, md_defects, [CORR, "Median"],
                                          msk_arr, SUBJECT_DIR)
                 calc_diagnostic_accuracy(rdrs_arr, mn_defects, [CORR, "Mean"],
