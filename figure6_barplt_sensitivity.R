@@ -54,9 +54,12 @@ N4_cf_sensitivity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_D
 
 # #Reshape Data to Long Format for ggplot2
 FA_cf_long <- FA_cf_sensitivity %>%
-  pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity")
+  pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity") %>%
+  filter(!is.na(Sensitivity))
+
 N4_cf_long <- N4_cf_sensitivity %>%
-  pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity")
+  pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity") %>%
+  filter(!is.na(Sensitivity))
 
 ##To make false postive as percentage
 FA_cf_long$Sensitivity <- FA_cf_long$Sensitivity * 100
@@ -65,20 +68,20 @@ N4_cf_long$Sensitivity <- N4_cf_long$Sensitivity * 100
 ##############################BAR Plots and statistical tests###################
 #########################FA
 cf_fa_bar <- create_barplot(FA_cf_long, "Analysis_Method", "Sensitivity",
-               expression(bold("Mean Sensitivity"[FA]* " " *"(%)")),
-               "Analysis Method", c(0, 30), cbPalette, "Subject_id", plt_order)
+               expression(bold("Sensitivity"[FA]* " " *"(%)")),
+               "Analysis Method", c(0, 160), cbPalette, "Subject_id", plt_order)
 friedman.test(Sensitivity ~ Analysis_Method | Subject_id, data = FA_cf_long)
 frdAllPairsNemenyiTest(Sensitivity ~ Analysis_Method | Subject_id, data = FA_cf_long)
 
 #########################N4: expression(bold("Mean FP VDP"[N4]* " " *"(%)"))
 cf_n4_bar <- create_barplot(N4_cf_long, "Analysis_Method", "Sensitivity",
-                            "Mean FP VDP (%)",
-               "Analysis Method", c(0, 30), cbPalette, "Subject_id", plt_order)
+                            expression(bold("Sensitivity"[N4]* " " *"(%)")),
+               "Analysis Method", c(0, 160), cbPalette, "Subject_id", plt_order)
 friedman.test(Sensitivity ~ Analysis_Method | Subject_id, data = N4_cf_long)
 frdAllPairsNemenyiTest(Sensitivity ~ Analysis_Method | Subject_id, data = N4_cf_long)
 
 # Save the plot as a png file in the specified directory
-ggsave("./zR_plots_4abs/cf_Sensitivity_barplt_FA.png", plot = cf_fa_bar, width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4abs/cf_Sensitivity_barplt_N4.png", plot = cf_n4_bar, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_Sensitivity_barplt_FA.png", plot = cf_fa_bar, width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_Sensitivity_barplt_N4.png", plot = cf_n4_bar, width = 4.5, height = 3.7, dpi = 300)
 
 
