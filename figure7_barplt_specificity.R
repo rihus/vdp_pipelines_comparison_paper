@@ -48,7 +48,7 @@ create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
   return(bar_plt)
 }
 ################################################################################
-# ##Load the fraction of reader defect data from CSV files
+# ##Load the specificity data from CSV files
 FA_cf_specificity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_specificity.csv")
 N4_cf_specificity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_specificity.csv")
 
