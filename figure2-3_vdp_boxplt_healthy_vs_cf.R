@@ -99,20 +99,20 @@ combined_n4 <- rbind(transform(N4_spir_ctrl, Category="Healthy"),
 #   stat_tst="wilcox", paired=FALSE, py_pos=NULL, addp_eq=FALSE)
 
 ##############################Reader VDP
-rdr_vdp <- boxplt(combined_fa, "Category", "Reader", ylabel=expression(bold(VDP[Reader]* " "* "(%)")),
+rdr_vdp <- boxplt(combined_fa, "Category", "Reader", ylabel=expression(bold(Reader* " " *VDP* " "* "(%)")),
                   xlabel="", ylimit=c(0, 40), bxfill= cbPalette[1], py_pos=36, addp_eq=FALSE)
 ##############################Box plot: FA VDP (CF vs Healthy)
-fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[Adaptive]* " "* "(%)")),
+fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[FA]*" "* "(%)")),
                  xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=39, addp_eq=TRUE)
-fa_hr <- boxplt(combined_fa, "Category", "Hierarchical", ylabel=expression(bold(VDP[Hierarchical]* " "* "(%)")),
+fa_hr <- boxplt(combined_fa, "Category", "Hierarchical", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[3], py_pos=31, addp_eq=TRUE)
-fa_th <- boxplt(combined_fa, "Category", "Thresholding", ylabel=expression(bold(VDP[Thresholding]* " "* "(%)")),
+fa_th <- boxplt(combined_fa, "Category", "Thresholding", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                   xlabel="", ylimit=c(0, 35), bxfill= cbPalette[4], py_pos=31, addp_eq=TRUE)
-fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[Percentile]* " "* "(%)")),
+fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[5], py_pos=31, addp_eq=TRUE)
-fa_mn <- boxplt(combined_fa, "Category", "Mean", ylabel=expression(bold(VDP[Mean]* " "* "(%)")),
+fa_mn <- boxplt(combined_fa, "Category", "Mean", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[6], py_pos=31, addp_eq=TRUE)
-fa_md <- boxplt(combined_fa, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
+fa_md <- boxplt(combined_fa, "Category", "Median", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[7], py_pos=31, addp_eq=TRUE)
 
 
@@ -136,17 +136,17 @@ ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mdn_vdp_p.png", plot = fa_md[[2]],
 
 
 ##############################Box plot: N4 VDP (CF vs Healthy)
-n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP[Adaptive]* " "* "(%)")),
+n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=34, addp_eq=TRUE)
-n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[Hierarchical]* " "* "(%)")),
+n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=34, addp_eq=TRUE)
-n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[Thresholding]* " "* "(%)")),
+n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=34, addp_eq=FALSE)
-n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[Percentile]* " "* "(%)")),
+n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=34, addp_eq=FALSE)
-n4_mn <- boxplt(combined_n4, "Category", "Mean", ylabel=expression(bold(VDP[Mean]* " "* "(%)")),
+n4_mn <- boxplt(combined_n4, "Category", "Mean", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=34, addp_eq=FALSE)
-n4_md <- boxplt(combined_n4, "Category", "Median", ylabel=expression(bold(VDP[Median]* " "* "(%)")),
+n4_md <- boxplt(combined_n4, "Category", "Median", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[7], py_pos=34, addp_eq=FALSE)
 # #Save the plot as a png file in the specified directory
 
