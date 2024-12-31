@@ -12,7 +12,7 @@ N4_cf_specificity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_D
 FA_cf_accuracy <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_accuracy.csv")
 N4_cf_accuracy <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_accuracy.csv")
 
-
+##Define the function to perform normality tests on all columns of dataframe
 normality_test <- function(data, columns, alpha = 0.05) {
   # Check if all columns exist in the data
   missing_cols <- setdiff(columns, colnames(data))
@@ -20,33 +20,50 @@ normality_test <- function(data, columns, alpha = 0.05) {
     stop(paste("These columns are missing in the data:", paste(missing_cols, collapse = ", ")))
   }
   
-  # Initialize a list to store results
-  results <- list()
+  # Initialize a dataframe to store results
+  results <- data.frame(
+    Column = character(),
+    W_Statistic = numeric(),
+    P_Value = numeric(),
+    Normal_Data = character(),
+    stringsAsFactors = FALSE
+  )
   
   # Perform Shapiro-Wilk test for each column
   for (col in columns) {
     test_result <- shapiro.test(data[[col]])
     is_normal <- ifelse(test_result$p.value > alpha, "Yes", "No")
-    results[[col]] <- list(
-      W_statistic = test_result$statistic,
-      p_value = test_result$p.value,
-      is_normal = is_normal
-    )
+    results <- rbind(results, data.frame(
+      Column = col,
+      W_Statistic = test_result$statistic,
+      P_Value = test_result$p.value,
+      Normal_Data = is_normal
+    ))
   }
   
   # Print results in a readable format
   cat("Shapiro-Wilk Normality Test Results:\n")
   cat("------------------------------------\n")
-  for (col in columns) {
-    cat(paste0("Column: ", col, "\n"))
-    cat(paste0("  W Statistic: ", round(results[[col]]$W_statistic, 4), "\n"))
-    cat(paste0("  p-value: ", round(results[[col]]$p_value, 4), "\n"))
-    cat(paste0("  Normal Data: ", results[[col]]$is_normal, "\n\n"))
-  }
+  print(results, row.names = FALSE)
   
-  # Return results as a list
+  # Return results as a dataframe
   return(results)
 }
 
-normality_test(df, c("col1", "col2", "col3"))
+
+FA_sensitivity <- normality_test(FA_cf_sensitivity, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                    "Thresholding", "Mean"))
+N4_sensitivity <- normality_test(N4_cf_sensitivity, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                                      "Thresholding", "Mean"))
+
+FA_specificity <- normality_test(FA_cf_specificity, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                                      "Thresholding", "Mean"))
+N4_specificity <- normality_test(N4_cf_specificity, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                                      "Thresholding", "Mean"))
+
+FA_accuracy <- normality_test(FA_cf_accuracy, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                                      "Thresholding", "Mean"))
+N4_accuracy <- normality_test(N4_cf_accuracy, c("Median", "Percentile", "Adaptive", "Hierarchical",
+                                                      "Thresholding", "Mean"))
+
 
