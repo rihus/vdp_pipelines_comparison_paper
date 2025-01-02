@@ -192,7 +192,7 @@ def write_to_csv(filename, heading, data):
         writer_.writerow(data)
 
 def save_slicewise_imgs(image_in, output_dir, data_type=None):
-    """Save slice-wise images of of a 3d/4d montage"""
+    """Save slice-wise images of of a 4d montage"""
     for an_img in range(image_in.shape[2]):
         out_file = (f"img_slice_{an_img}.png" if data_type is None
                     else f"{data_type}_img_slice_{an_img}.png")
@@ -273,26 +273,28 @@ def master_calcs_plots(reader, auto_calc, corr_anlys, subj_dir, img_msk):
     """Calculate/plot dice coefficient and overlay b/w reader and anto-analysis methods"""
     defects_diff_arr = calc_dice_match_diff_plot(reader, auto_calc,
                                             corr_anlys, subj_dir, img_msk[1])
-    # defects_overlay_4d = overlay_images(img_msk[0], defects_diff_arr)
-    # defects_overlay_montage = create_montage_array(defects_overlay_4d, 'all', img_msk[1])
-    # overlay_fig = plot_binning_montage(defects_overlay_montage)
-    # outdir = os.path.join(subj_dir, "rdr_calcs_defect_overlays")
-    # os.makedirs(outdir, exist_ok=True)
-    # save_image(overlay_fig, outdir,
-    #            f"rdr_{corr_anlys[0]}_{corr_anlys[1]}", "defects_ovrlay")
-    # save_slicewise_imgs(defects_overlay_4d, outdir, f"rdr_{corr_anlys[0]}_{corr_anlys[1]}_ovrlay")
+    defects_overlay_4d = overlay_images(img_msk[0], defects_diff_arr)
+    defects_overlay_montage = create_montage_array(defects_overlay_4d, 'all', img_msk[1])
+    overlay_fig = plot_binning_montage(defects_overlay_montage)
+    outdir = os.path.join(subj_dir, "rdr_calcs_defect_overlays")
+    os.makedirs(outdir, exist_ok=True)
+    save_image(overlay_fig, outdir,
+               f"rdr_{corr_anlys[0]}_{corr_anlys[1]}", "defects_ovrlay")
+    save_slicewise_imgs(defects_overlay_4d, outdir, f"rdr_{corr_anlys[0]}_{corr_anlys[1]}_ovrlay")
 
 #%% Loading defect data, calculating dice coefficient
 ANALYSIS_MODE = "Batch" ##Single or Batch modes
-SUBJECT_ID = "IRC740H-003"
+SUBJECT_ID = "IRC740H-005"
 CORR = "N4" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
     SUBJECT_DIR = os.path.join(PARENT_DIR, SUBJECT_ID)
     ## Load defect arrays, select defects, and load reader defects
-    m_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-median_defect_array.npy",
+    md_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-median_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+    mn_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_lb-mean_defect_array.npy",
+                                        f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
     pct_defects = load_select_defects(SUBJECT_DIR,f"{CORR}_corr_glb-percentile_defect_array.npy",
                                     f"{CORR}_corr_vdp_analysis", "glb_percentile_analysis")
     ak_defects = load_select_defects(SUBJECT_DIR,f"{CORR}_corr_adaptive-kmeans_defect_array.npy",
@@ -303,17 +305,30 @@ if ANALYSIS_MODE == "Single":
     th_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_thresholding_defect_array.npy",
                                     f"{CORR}_corr_vdp_analysis", "thresholding_analysis")
     rdr_rh = load_select_defects(SUBJECT_DIR,"img_defect_mask_rh.nii.gz")
-    # rdr_jp = load_select_defects(SUBJECT_DIR,"img_defect_mask_jp.nii.gz")
+    ##Try to load Joey or Abood's segmented defect mask
+    defects_masks = ["img_defect_mask_jp.nii.gz", "img_defect_mask_ab.nii.gz"]
+    DEFECTS = None
+    for mask in defects_masks:
+        mask_path = os.path.join(SUBJECT_DIR, mask)
+        try:
+            DEFECTS, _ = process_nifti(mask_path)
+            break  # Exit loop if successful
+        except OSError:
+            print(f"Mask {mask} not found or could not be processed.")
+    if DEFECTS is None:
+        print("No valid defects mask (JP or AB) was found.")
     msk_arr = load_select_defects(SUBJECT_DIR, "img_ventilation_mask.nii.gz")
+    rdrs_arr = (rdr_rh*msk_arr) + (DEFECTS*msk_arr) == 2
     img_arr = load_select_defects(SUBJECT_DIR, "img_ventilation.nii.gz")
     img_arr /= np.max(img_arr*msk_arr)
-    rdr_arr = rdr_rh*msk_arr # +(rdr_jp*msk_arr) == 2
     img_n_msk = [img_arr, msk_arr]
-    master_calcs_plots(rdr_arr, m_defects, [CORR, "glb-median"], SUBJECT_DIR, img_n_msk)
-    master_calcs_plots(rdr_arr, pct_defects, [CORR, "glb-percentile"], SUBJECT_DIR, img_n_msk)
-    master_calcs_plots(rdr_arr, ak_defects, [CORR, "adaptive-kmeans"], SUBJECT_DIR, img_n_msk)
-    master_calcs_plots(rdr_arr, hk_defects, [CORR, "hierarchical-kmeans"], SUBJECT_DIR, img_n_msk)
-    master_calcs_plots(rdr_arr, th_defects, [CORR, "thresholding"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, md_defects, [CORR, "glb-median"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, mn_defects, [CORR, "lb-mean"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, pct_defects, [CORR, "glb-percentile"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, ak_defects, [CORR, "adaptive-kmeans"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, hk_defects, [CORR, "hierarchical-kmeans"], SUBJECT_DIR, img_n_msk)
+    master_calcs_plots(rdrs_arr, th_defects, [CORR, "thresholding"], SUBJECT_DIR, img_n_msk)
+
 elif ANALYSIS_MODE == "Batch":
     for dirpath, dirnames, filenames in os.walk(PARENT_DIR):
         for dirname in dirnames:
@@ -322,9 +337,12 @@ elif ANALYSIS_MODE == "Batch":
                 print(f"\nSubject folder name: {dirname}")
                 SUBJECT_DIR = os.path.join(PARENT_DIR, dirname)
                 ## Load defect arrays, select defects, and load reader defects
-                m_defects = load_select_defects(SUBJECT_DIR,
+                md_defects = load_select_defects(SUBJECT_DIR,
                                         f"{CORR}_corr_glb-median_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+                mn_defects = load_select_defects(SUBJECT_DIR,
+                                        f"{CORR}_corr_lb-mean_defect_array.npy",
+                                        f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
                 pct_defects = load_select_defects(SUBJECT_DIR,
                                         f"{CORR}_corr_glb-percentile_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "glb_percentile_analysis")
@@ -338,21 +356,34 @@ elif ANALYSIS_MODE == "Batch":
                                         f"{CORR}_corr_thresholding_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "thresholding_analysis")
                 rdr_rh = load_select_defects(SUBJECT_DIR,"img_defect_mask_rh.nii.gz")
-                # rdr_jp = load_select_defects(SUBJECT_DIR,"img_defect_mask_jp.nii.gz")
+                ##Try to load Joey or Abood's segmented defect mask
+                defects_masks = ["img_defect_mask_jp.nii.gz", "img_defect_mask_ab.nii.gz"]
+                DEFECTS = None
+                for mask in defects_masks:
+                    mask_path = os.path.join(SUBJECT_DIR, mask)
+                    try:
+                        DEFECTS, _ = process_nifti(mask_path)
+                        break  # Exit loop if successful
+                    except OSError:
+                        print(f"Mask {mask} not found or could not be processed.")
+                if DEFECTS is None:
+                    print("No valid defects mask (JP or AB) was found.")
                 msk_arr = load_select_defects(SUBJECT_DIR, "img_ventilation_mask.nii.gz")
+                rdrs_arr = (rdr_rh*msk_arr) + (DEFECTS*msk_arr) == 2
                 img_arr = load_select_defects(SUBJECT_DIR, "img_ventilation.nii.gz")
                 img_arr /= np.max(img_arr*msk_arr)
-                rdr_arr = rdr_rh*msk_arr # (rdr_rh*msk_arr)+(rdr_jp*msk_arr) == 2
                 img_n_msk = [img_arr, msk_arr]
-                master_calcs_plots(rdr_arr, m_defects, [CORR, "glb-median"],
+                master_calcs_plots(rdrs_arr, md_defects, [CORR, "glb-median"],
                                    SUBJECT_DIR, img_n_msk)
-                master_calcs_plots(rdr_arr, pct_defects, [CORR, "glb-percentile"],
+                master_calcs_plots(rdrs_arr, mn_defects, [CORR, "lb-mean"],
                                    SUBJECT_DIR, img_n_msk)
-                master_calcs_plots(rdr_arr, ak_defects, [CORR, "adaptive-kmeans"],
+                master_calcs_plots(rdrs_arr, pct_defects, [CORR, "glb-percentile"],
                                    SUBJECT_DIR, img_n_msk)
-                master_calcs_plots(rdr_arr, hk_defects, [CORR, "hierarchical-kmeans"],
+                master_calcs_plots(rdrs_arr, ak_defects, [CORR, "adaptive-kmeans"],
                                    SUBJECT_DIR, img_n_msk)
-                master_calcs_plots(rdr_arr, th_defects, [CORR, "thresholding"],
+                master_calcs_plots(rdrs_arr, hk_defects, [CORR, "hierarchical-kmeans"],
+                                   SUBJECT_DIR, img_n_msk)
+                master_calcs_plots(rdrs_arr, th_defects, [CORR, "thresholding"],
                                    SUBJECT_DIR, img_n_msk)
 
 # %%
