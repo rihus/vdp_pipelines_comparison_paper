@@ -11,8 +11,8 @@ setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_an
 # linetypes: 0 = blank, 1 = solid, 2 = dashed, 3 = dotted, 4 = dotdash, 5 = longdash, 6 = twodash
 
 ##Colorblind friendly palette:
-cbPalette <- c("#888888", "#CC6677", "#882255", "#88CCEE", "#332288", "#6699CC",
-               "#999933", "#AA4499", "#DDCC77", "#661100", "#44AA99", "#117733")
+cbPalette <- c("#888888", "#CC6677", "#882255", "#332288", "#6699CC", "#DDCC77",
+               "#999933", "#AA4499", "#661100", "#44AA99", "#117733", "#88CCEE")
 
 ##Define order of the data
 plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile",
@@ -124,12 +124,12 @@ adpt_bxp_n4 <- connected_bxp(N4_rdr_adpt, "AnalysisMethod","VDP", "Subject_id",
                              c(0, 40), cbPalette[c(1, 2)], "", ylabeln4)
 hrar_bxp_n4 <- connected_bxp(N4_rdr_hrar, "AnalysisMethod","VDP", "Subject_id",
                              c(0, 40), cbPalette[c(1, 3)], "", ylabeln4)
-thresh_bxp_n4 <- connected_bxp(N4_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
-                               c(0, 40), cbPalette[c(1, 4)], "", ylabeln4)
 prcnt_bxp_n4 <- connected_bxp(N4_rdr_prcnt, "AnalysisMethod","VDP", "Subject_id",
-                                c(0, 40), cbPalette[c(1, 5)], "", ylabeln4)
+                                c(0, 40), cbPalette[c(1, 4)], "", ylabeln4)
 mean_bxp_n4 <- connected_bxp(N4_rdr_mean, "AnalysisMethod","VDP", "Subject_id",
-                              c(0, 40), cbPalette[c(1, 6)], "", ylabeln4)
+                              c(0, 40), cbPalette[c(1, 5)], "", ylabeln4)
+thresh_bxp_n4 <- connected_bxp(N4_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
+                               c(0, 40), cbPalette[c(1, 6)], "", ylabeln4)
 medn_bxp_n4 <- connected_bxp(N4_rdr_medn, "AnalysisMethod","VDP", "Subject_id",
                                 c(0, 40), cbPalette[c(1, 7)], "", ylabeln4)
 
@@ -137,12 +137,12 @@ adpt_bxp_fa <- connected_bxp(FA_rdr_adpt, "AnalysisMethod","VDP", "Subject_id",
                              c(0, 40), cbPalette[c(1, 2)], "", ylabelfa)
 hrar_bxp_fa <- connected_bxp(FA_rdr_hrar, "AnalysisMethod","VDP", "Subject_id",
                              c(0, 40), cbPalette[c(1, 3)], "", ylabelfa)
-thresh_bxp_fa <- connected_bxp(FA_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
-                               c(0, 40), cbPalette[c(1, 4)], "", ylabelfa)
 prcnt_bxp_fa <- connected_bxp(FA_rdr_prcnt, "AnalysisMethod","VDP", "Subject_id",
-                              c(0, 40), cbPalette[c(1, 5)], "", ylabelfa)
+                              c(0, 40), cbPalette[c(1, 4)], "", ylabelfa)
 mean_bxp_fa <- connected_bxp(FA_rdr_mean, "AnalysisMethod","VDP", "Subject_id",
-                              c(0, 40), cbPalette[c(1, 6)], "", ylabelfa)
+                              c(0, 40), cbPalette[c(1, 5)], "", ylabelfa)
+thresh_bxp_fa <- connected_bxp(FA_rdr_thrsh, "AnalysisMethod","VDP", "Subject_id",
+                               c(0, 40), cbPalette[c(1, 6)], "", ylabelfa)
 medn_bxp_fa <- connected_bxp(FA_rdr_medn, "AnalysisMethod","VDP", "Subject_id",
                              c(0, 40), cbPalette[c(1, 7)], "", ylabelfa)
 
@@ -201,3 +201,4 @@ ggsave("./zR_plots_4ppr/cf_bxp_medn_spir_FA_rdr_vdp.png", plot = medn_bxp_fa, wi
 ggsave("./zR_plots_4ppr/cf_bxp_medn_spir_FA_rdr_vdp_p.png", plot = medn_bxp_fa_p, width = 4.5, height = 3.7, dpi = 300)
 
 ##
+
