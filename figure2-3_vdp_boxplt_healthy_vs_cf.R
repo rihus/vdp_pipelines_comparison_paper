@@ -11,8 +11,8 @@ library(PMCMRplus)
 setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_analysis/analysis_comparisons")
 
 ##Colorblind friendly palette:
-cbPalette <- c("#888888", "#CC6677", "#882255", "#88CCEE", "#332288", "#6699CC",
-               "#999933", "#AA4499", "#DDCC77", "#661100", "#44AA99", "#117733")
+cbPalette <- c("#888888", "#CC6677", "#882255", "#332288", "#6699CC", "#DDCC77",
+               "#999933", "#AA4499", "#661100", "#44AA99", "#117733", "#88CCEE")
 ##Define order of the data -- if needed
 # plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile",
 #                "Mean","Median")
@@ -106,12 +106,12 @@ fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP
                  xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=39, addp_eq=TRUE)
 fa_hr <- boxplt(combined_fa, "Category", "Hierarchical", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[3], py_pos=31, addp_eq=TRUE)
-fa_th <- boxplt(combined_fa, "Category", "Thresholding", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
-                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[4], py_pos=31, addp_eq=TRUE)
 fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 35), bxfill= cbPalette[5], py_pos=31, addp_eq=TRUE)
+                xlabel="", ylimit=c(0, 35), bxfill= cbPalette[4], py_pos=31, addp_eq=TRUE)
 fa_mn <- boxplt(combined_fa, "Category", "Mean", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[6], py_pos=31, addp_eq=TRUE)
+                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[5], py_pos=31, addp_eq=TRUE)
+fa_th <- boxplt(combined_fa, "Category", "Thresholding", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
+                xlabel="", ylimit=c(0, 35), bxfill= cbPalette[6], py_pos=31, addp_eq=TRUE)
 fa_md <- boxplt(combined_fa, "Category", "Median", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 35), bxfill= cbPalette[7], py_pos=31, addp_eq=TRUE)
 
@@ -140,12 +140,12 @@ n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=34, addp_eq=TRUE)
 n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=34, addp_eq=TRUE)
-n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
-                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=34, addp_eq=FALSE)
 n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=34, addp_eq=FALSE)
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=34, addp_eq=FALSE)
 n4_mn <- boxplt(combined_n4, "Category", "Mean", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=34, addp_eq=FALSE)
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[5], py_pos=34, addp_eq=FALSE)
+n4_th <- boxplt(combined_n4, "Category", "Thresholding", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
+                xlabel="", ylimit=c(0, 40), bxfill= cbPalette[6], py_pos=34, addp_eq=FALSE)
 n4_md <- boxplt(combined_n4, "Category", "Median", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[7], py_pos=34, addp_eq=FALSE)
 # #Save the plot as a png file in the specified directory
