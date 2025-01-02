@@ -13,11 +13,11 @@ setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_an
 
 ##Colorblind friendly palette:
 #cbPalette <- c("#999999","#F0E442","#CC79A7","#E69F00","#D55E00","#56B4E9","#0072B2") # "#009E73",
-cbPalette <- c("#888888", "#CC6677", "#882255", "#88CCEE", "#332288", "#6699CC",
-               "#999933", "#AA4499", "#DDCC77", "#661100", "#44AA99", "#117733")
+cbPalette <- c("#882255",  "#CC6677", "#332288", "#6699CC", "#DDCC77", "#999933",
+               "#AA4499", "#661100", "#44AA99", "#117733", "#888888", "#88CCEE") #
 ##Define order of the data
-plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile",
-               "Mean","Median")
+plt_order <- c("Reader", "Hierarchical","Adaptive","Percentile",
+               "Mean","Thresholding", "Median")
 
 create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
                            barclr, subjs_colname, plt_order){
