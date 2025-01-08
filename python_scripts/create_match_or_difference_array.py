@@ -283,9 +283,9 @@ def master_calcs_plots(reader, auto_calc, corr_anlys, subj_dir, img_msk):
     save_slicewise_imgs(defects_overlay_4d, outdir, f"rdr_{corr_anlys[0]}_{corr_anlys[1]}_ovrlay")
 
 #%% Loading defect data, calculating dice coefficient
-ANALYSIS_MODE = "Batch" ##Single or Batch modes
-SUBJECT_ID = "IRC740H-005"
-CORR = "N4" # N4, FA
+ANALYSIS_MODE = "Single" ##Single or Batch modes
+SUBJECT_ID = "IRC740H-028"
+CORR = "FA" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
