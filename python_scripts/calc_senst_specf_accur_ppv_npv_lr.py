@@ -104,9 +104,9 @@ def process_csv_files(file_list, output_folder, correction):
 PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_work"
               r"\vdp_analysis\analysis_comparisons\IRC740H_visit1_spiral_cf")
 ###Specify options
-ANALYSIS_MODE = "Batch" ##Single or Batch modes
-SUBJECT_ID = "IRC740H-002"
-CORR = "N4" # N4, FA
+ANALYSIS_MODE = "Single" ##Single or Batch modes
+SUBJECT_ID = "IRC740H-028"
+CORR = "FA" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
