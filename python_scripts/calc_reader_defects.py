@@ -54,7 +54,7 @@ SUBJECTS= ["IRC740H-001", "IRC740H-002", "IRC740H-003", "IRC740H-004", "IRC740H-
            "IRC740H-028", "IRC740H-030", "IRC740H-031", "IRC740H-033", "IRC740H-034",
            "IRC740H-045", "IRC740H-049", "IRC740H-052", "IRC740H-053", "IRC740H-054",
            "IRC740H-055", "IRC740H-056", "IRC740H-064"]
-
+SUBJECTS= ["IRC740H-028"]
 # SUBJECTS = ["HYP-001-001", "HYP-001-002", "HYP-001-003", "HYP-001-004", "HYP-001-005",
 #             "HYP-001-006", "HYP-001-007", "HYP-001-008", "HYP-001-009", "HYP-001-010",
 #             "HYP-001-011", "HYP-002-001", "HYP-002-002", "HYP-002-003", "HYP-002-004",
@@ -106,7 +106,8 @@ for SUBJECT_ID in SUBJECTS:
     vdp_csv_path = os.path.join(PARENT_DIR, "Reader_segmented_vdp.csv")
     vdp_csv_heading = ["Subject_id", "Reader"]
     vdp_results = [SUBJECT_ID, Reader_vdp]
-    write_to_csv(vdp_csv_path, vdp_csv_heading, vdp_results)
+    print(vdp_results)
+    # write_to_csv(vdp_csv_path, vdp_csv_heading, vdp_results)
 print(f"\nTotal processed {NUM}")
 
 #%%
