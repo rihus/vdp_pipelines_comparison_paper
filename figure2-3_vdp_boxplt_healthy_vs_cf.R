@@ -14,8 +14,8 @@ setwd("C:/Users/HUSDQ4/OneDrive - cchmc/cincy_work/all_projects_data_work/vdp_an
 cbPalette <- c("#888888", "#CC6677", "#882255", "#332288", "#6699CC", "#DDCC77",
                "#999933", "#AA4499", "#661100", "#44AA99", "#117733", "#88CCEE")
 ##Define order of the data -- if needed
-# plt_order <- c("Reader", "Adaptive","Hierarchical","Thresholding","Percentile",
-#                "Mean","Median")
+# plt_order <- c("Reader", "Adaptive","Hierarchical", "Mean", "Percentile",
+#                "Thresholding", "Median")
 
 boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
                    bxfill = "white", bxpallet=NULL, pt_clrs=c("#000000", "#009e73"),
@@ -103,7 +103,7 @@ rdr_vdp <- boxplt(combined_fa, "Category", "Reader", ylabel=expression(bold(Read
                   xlabel="", ylimit=c(0, 40), bxfill= cbPalette[1], py_pos=36, addp_eq=FALSE)
 ##############################Box plot: FA VDP (CF vs Healthy)
 fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[FA]*" "* "(%)")),
-                 xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=39, addp_eq=TRUE)
+                 xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=49, addp_eq=TRUE)
 fa_hr <- boxplt(combined_fa, "Category", "Hierarchical", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[3], py_pos=31, addp_eq=TRUE)
 fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
