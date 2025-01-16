@@ -134,9 +134,9 @@ def load_select_defects(subj_dir, f_name, sub_dir1=None, sub_dir2=None):
 PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_work"
               r"\vdp_analysis\analysis_comparisons\IRC740H_visit1_spiral_cf") 
 ###Specify options
-ANALYSIS_MODE = "Single" ##Single or Batch modes
+ANALYSIS_MODE = "Batch" ##Single or Batch modes
 SUBJECT_ID = "IRC740H-028"
-CORR = "N4" # N4, FA
+CORR = "FA" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 
 ## Single subject analysis mode
@@ -186,10 +186,16 @@ if ANALYSIS_MODE == "Single":
         OUT_DIR = os.path.join(SUBJECT_DIR, "rdr_calcs_defect_overlays",
                             "defect_overlay_imgs")
         os.makedirs(OUT_DIR, exist_ok=True)
-        save_image(defect_montage_fig, OUT_DIR, data_type=f"{CORR}",
-                im_type=f"{arr_name}_defect_overlay")
-        save_slicewise_imgs(defect_arr_4d, OUT_DIR,
-                            data_type=f'{CORR}_{arr_name}_defect_overlay')
+        if arr_name == 'reader':
+            save_image(defect_montage_fig, OUT_DIR, data_type="Orig",
+                        im_type=f"{arr_name}_defect_overlay")
+            save_slicewise_imgs(defect_arr_4d, OUT_DIR,
+                        data_type=f'{arr_name}_defect_overlay')
+        else:
+            save_image(defect_montage_fig, OUT_DIR, data_type=f"{CORR}",
+                        im_type=f"{arr_name}_defect_overlay")
+            save_slicewise_imgs(defect_arr_4d, OUT_DIR,
+                        data_type=f'{CORR}_{arr_name}_defect_overlay')
 
 ## Batch analysis mode
 elif ANALYSIS_MODE == "Batch":
@@ -242,21 +248,27 @@ elif ANALYSIS_MODE == "Batch":
                       f"hierarchical: {np.count_nonzero(hk_)}\tadaptive: {np.count_nonzero(ak_)}\t"
                       f"percentile: {np.count_nonzero(pct_)}\nmean: {np.count_nonzero(mn_)}\t"
                       f"thresholding': {np.count_nonzero(th_)}\tmedian: {np.count_nonzero(md_)}\n")
-                # defects_dict = {'reader': rdr_, 'hierarchical': hk_, 'adaptive': ak_,
-                #                 'percentile': pct_, 'mean': mn_, 'thresholding': th_,
-                #                 'median': md_}
-                # for arr_name, arr in defects_dict.items():
-                #     print(arr_name, np.count_nonzero(arr))
-                #     defect_arr_4d = overlay_images(IMG_file, arr)
-                #     defect_montage_arr = create_montage_array(defect_arr_4d, 'all', MSK_file)
-                #     defect_montage_fig = montage_plot_4d(defect_montage_arr)
-                #     ##Create directory for saving overlay images
-                #     OUT_DIR = os.path.join(SUBJECT_DIR, "rdr_calcs_defect_overlays",
-                #                         "defect_overlay_imgs")
-                #     os.makedirs(OUT_DIR, exist_ok=True)
-                #     save_image(defect_montage_fig, OUT_DIR, data_type=f"{CORR}",
-                #             im_type=f"{arr_name}_defect_overlay")
-                #     save_slicewise_imgs(defect_arr_4d, OUT_DIR,
-                #                         data_type=f'{CORR}_{arr_name}_defect_overlay')
+                defects_dict = {'reader': rdr_, 'hierarchical': hk_, 'adaptive': ak_,
+                                'percentile': pct_, 'mean': mn_, 'thresholding': th_,
+                                'median': md_}
+                for arr_name, arr in defects_dict.items():
+                    print(arr_name, np.count_nonzero(arr))
+                    defect_arr_4d = overlay_images(IMG_file, arr)
+                    defect_montage_arr = create_montage_array(defect_arr_4d, 'all', MSK_file)
+                    defect_montage_fig = montage_plot_4d(defect_montage_arr)
+                    ##Create directory for saving overlay images
+                    OUT_DIR = os.path.join(SUBJECT_DIR, "rdr_calcs_defect_overlays",
+                                        "defect_overlay_imgs")
+                    os.makedirs(OUT_DIR, exist_ok=True)
+                    if arr_name == 'reader':
+                        save_image(defect_montage_fig, OUT_DIR, data_type="Orig",
+                                    im_type=f"{arr_name}_defect_overlay")
+                        save_slicewise_imgs(defect_arr_4d, OUT_DIR,
+                                    data_type=f'{arr_name}_defect_overlay')
+                    else:
+                        save_image(defect_montage_fig, OUT_DIR, data_type=f"{CORR}",
+                                    im_type=f"{arr_name}_defect_overlay")
+                        save_slicewise_imgs(defect_arr_4d, OUT_DIR,
+                                    data_type=f'{CORR}_{arr_name}_defect_overlay')
 
 #%%
