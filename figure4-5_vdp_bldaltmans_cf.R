@@ -61,8 +61,8 @@ BlandAltman <- function(main_df, column1, column2, us1, us2, x_lim, y_lim,
 
 ################################################################################
 # ##Load the data from both CSV files and arrange it to plot
-N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_vdps.csv")
-FA_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_vdps.csv")
+N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/N4_combined_vdps.csv")
+FA_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/FA_combined_vdps.csv")
 
 ##Bland-Altman plots - FA_corrected
 fa_hrar <- BlandAltman(main_df = FA_spir_cf_vdps, column1 = "Reader",
