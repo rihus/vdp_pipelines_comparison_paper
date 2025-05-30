@@ -106,14 +106,14 @@ PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_wo
 ###Specify options
 ANALYSIS_MODE = "Batch" ##Single or Batch modes
 SUBJECT_ID = "IRC740H-028"
-CORR = "FA" # N4, FA
+CORR = "N4" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
     SUBJECT_DIR = os.path.join(PARENT_DIR, SUBJECT_ID)
     ## Load defect arrays, select defects, and load reader defects
-    md_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-median_defect_array.npy",
-                                        f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+    md_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-mean_defect_array.npy",
+                                        f"{CORR}_corr_vdp_analysis", "glb_mean_analysis")
     mn_defects = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_lb-mean_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
     pct_defcts = load_select_defects(SUBJECT_DIR,f"{CORR}_corr_glb-percentile_defect_array.npy",
@@ -156,8 +156,8 @@ elif ANALYSIS_MODE == "Batch":
                 SUBJECT_DIR = os.path.join(PARENT_DIR, dirname)
                 ## Load defect arrays, select defects, and load reader defects
                 md_defects = load_select_defects(SUBJECT_DIR,
-                                        f"{CORR}_corr_glb-median_defect_array.npy",
-                                        f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+                                        f"{CORR}_corr_glb-mean_defect_array.npy",
+                                        f"{CORR}_corr_vdp_analysis", "glb_mean_analysis")
                 mn_defects = load_select_defects(SUBJECT_DIR,
                                         f"{CORR}_corr_lb-mean_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
@@ -204,7 +204,7 @@ elif ANALYSIS_MODE == "Batch":
 #%%Collect all data into FA- and N4-corrected single files
 # PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_work"
 #               r"\vdp_analysis\analysis_comparisons\IRC740H_visit1_spiral_cf")
-analysis_fldr = os.path.join(PARENT_DIR,"vdp_analysis_results_December2024")
+analysis_fldr = os.path.join(PARENT_DIR,"vdp_analysis_results_May2025")
 N4_CSVs = [os.path.join(analysis_fldr, "rdr_N4_Adaptive_sens_spec_acc_pvs_lrs.csv"),
             os.path.join(analysis_fldr,"rdr_N4_Hierarchical_sens_spec_acc_pvs_lrs.csv"),
             os.path.join(analysis_fldr,"rdr_N4_Thresholding_sens_spec_acc_pvs_lrs.csv"),
