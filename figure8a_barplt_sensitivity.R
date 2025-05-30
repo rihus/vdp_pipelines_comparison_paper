@@ -49,17 +49,19 @@ create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
 }
 ################################################################################
 # ##Load the sensitivity data from CSV files
-FA_cf_sensitivity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_sensitivity.csv")
-N4_cf_sensitivity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_sensitivity.csv")
+FA_cf_sensitivity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/FA_combined_sensitivity.csv")
+N4_cf_sensitivity <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/N4_combined_sensitivity.csv")
 
 # #Reshape Data to Long Format for ggplot2
 FA_cf_long <- FA_cf_sensitivity %>%
   pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity") %>%
-  filter(!is.na(Sensitivity))
+  filter(!is.na(Sensitivity)) %>%
+  mutate(Analysis_Method = factor(Analysis_Method, levels = c("Hierarchical", "Adaptive", "Percentile", "Mean", "Thresholding", "Median")))
 
 N4_cf_long <- N4_cf_sensitivity %>%
   pivot_longer(cols = -Subject_id, names_to = "Analysis_Method", values_to = "Sensitivity") %>%
-  filter(!is.na(Sensitivity))
+  filter(!is.na(Sensitivity))  %>%
+  mutate(Analysis_Method = factor(Analysis_Method, levels = c("Hierarchical", "Adaptive", "Percentile", "Mean", "Thresholding", "Median")))
 
 ##To make false postive as percentage
 FA_cf_long$Sensitivity <- FA_cf_long$Sensitivity * 100
