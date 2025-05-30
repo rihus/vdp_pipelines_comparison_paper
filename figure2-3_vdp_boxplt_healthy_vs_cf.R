@@ -83,11 +83,11 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
 ################################################################################
 # ##Load the data from CSV files and arrange for plotting
 ##CF
-FA_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/FA_combined_vdps.csv")
-N4_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_December2024/N4_combined_vdps.csv")
+FA_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/FA_combined_vdps.csv")
+N4_spir_cf <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/N4_combined_vdps.csv")
 ##Healthy
-FA_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_December2024/FA_combined_vdps.csv")
-N4_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_December2024/N4_combined_vdps.csv")
+FA_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_May2025/FA_combined_vdps.csv")
+N4_spir_ctrl <- read.csv("./age_matched_spiral_healthy/vdp_analysis_results_May2025/N4_combined_vdps.csv")
 # #Create a combined data frame with an indicator for Correction and Category
 combined_fa <- rbind(transform(FA_spir_ctrl, Category="Healthy"),
                             transform(FA_spir_cf, Category="CF"))
