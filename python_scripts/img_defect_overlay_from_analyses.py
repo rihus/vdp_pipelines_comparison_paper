@@ -136,15 +136,15 @@ PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_wo
 ###Specify options
 ANALYSIS_MODE = "Batch" ##Single or Batch modes
 SUBJECT_ID = "IRC740H-028"
-CORR = "FA" # N4, FA
+CORR = "N4" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 
 ## Single subject analysis mode
 if ANALYSIS_MODE == "Single":
     SUBJECT_DIR = os.path.join(PARENT_DIR, SUBJECT_ID)
     ## Load defect arrays, select defects, and load reader defects
-    md_ = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-median_defect_array.npy",
-                                    f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+    md_ = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_glb-mean_defect_array.npy",
+                                    f"{CORR}_corr_vdp_analysis", "glb_mean_analysis")
     mn_ = load_select_defects(SUBJECT_DIR, f"{CORR}_corr_lb-mean_defect_array.npy",
                                     f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
     pct_ = load_select_defects(SUBJECT_DIR,f"{CORR}_corr_glb-percentile_defect_array.npy",
@@ -207,8 +207,8 @@ elif ANALYSIS_MODE == "Batch":
                 SUBJECT_DIR = os.path.join(PARENT_DIR, dirname)
                 ## Load defect arrays, select defects, and load reader defects
                 md_ = load_select_defects(SUBJECT_DIR,
-                                        f"{CORR}_corr_glb-median_defect_array.npy",
-                                        f"{CORR}_corr_vdp_analysis", "glb_median_analysis")
+                                        f"{CORR}_corr_glb-mean_defect_array.npy",
+                                        f"{CORR}_corr_vdp_analysis", "glb_mean_analysis")
                 mn_ = load_select_defects(SUBJECT_DIR,
                                         f"{CORR}_corr_lb-mean_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "lb_mean_analysis")
