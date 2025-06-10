@@ -40,7 +40,7 @@ create_barplot <- function(input_df, xdata, ydata, y_label, x_label, ylimits,
     theme_bw() +
     ylab(y_label) +
     xlab(x_label) +
-    theme(text = element_text(size = 14, face = "bold"),
+    theme(text = element_text(size = 16, face = "bold"),
           axis.text.x = element_text(angle = 45, hjust = 1),
           legend.position = "none") +
     scale_fill_manual(values = barclr)
@@ -71,14 +71,14 @@ N4_cf_long$Specificity <- N4_cf_long$Specificity * 100
 #########################FA
 cf_fa_bar <- create_barplot(FA_cf_long, "Analysis_Method", "Specificity",
                expression(bold("Specificity"[FA]* " " *"(%)")),
-               "Analysis Method", c(0, 160), cbPalette, "Subject_id", plt_order)
+               "Analysis Method", c(0, 105), cbPalette, "Subject_id", plt_order)
 friedman.test(Specificity ~ Analysis_Method | Subject_id, data = FA_cf_long)
 frdAllPairsNemenyiTest(Specificity ~ Analysis_Method | Subject_id, data = FA_cf_long)
 
 #########################N4: expression(bold("Mean FP VDP"[N4]* " " *"(%)"))
 cf_n4_bar <- create_barplot(N4_cf_long, "Analysis_Method", "Specificity",
                             expression(bold("Specificity"[N4]* " " *"(%)")),
-               "Analysis Method", c(0, 160), cbPalette, "Subject_id", plt_order)
+               "Analysis Method", c(0, 105), cbPalette, "Subject_id", plt_order)
 friedman.test(Specificity ~ Analysis_Method | Subject_id, data = N4_cf_long)
 frdAllPairsNemenyiTest(Specificity ~ Analysis_Method | Subject_id, data = N4_cf_long)
 
