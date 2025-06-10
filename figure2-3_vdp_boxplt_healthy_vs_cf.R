@@ -34,6 +34,12 @@ boxplt <- function(df_in, x_in, y_in, ylabel=NULL, xlabel="", ylimit=NULL,
   sd_val <- aggregate(yx_formula, df_in, sd)
   print("Standard-deviation")
   print(sd_val)
+  range_val <- aggregate(yx_formula, df_in, function(x) {
+    paste0("[", min(x, na.rm = TRUE), ", ", max(x, na.rm = TRUE), "]")
+  })
+  print("Range")
+  print(range_val)
+  
   ## Statistical test
   pval <- NULL
   if (stat_tst == "wilcox") {
@@ -102,10 +108,10 @@ combined_n4 <- rbind(transform(N4_spir_ctrl, Category="Healthy"),
 rdr_vdp <- boxplt(combined_fa, "Category", "Reader", ylabel=expression(bold(Reader* " " *VDP* " "* "(%)")),
                   xlabel="", ylimit=c(0, 40), bxfill= cbPalette[1], py_pos=36, addp_eq=FALSE)
 ##############################Box plot: FA VDP (CF vs Healthy)
-fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[FA]*" "* "(%)")),
-                 xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=49, addp_eq=TRUE)
 fa_hr <- boxplt(combined_fa, "Category", "Hierarchical", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[3], py_pos=31, addp_eq=TRUE)
+fa_adp <- boxplt(combined_fa, "Category", "Adaptive", ylabel=expression(bold(VDP[FA]*" "* "(%)")),
+                 xlabel="", ylimit=c(0, 55), bxfill= cbPalette[2], py_pos=49, addp_eq=TRUE)
 fa_pct <- boxplt(combined_fa, "Category", "Percentile", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 35), bxfill= cbPalette[4], py_pos=31, addp_eq=TRUE)
 fa_mn <- boxplt(combined_fa, "Category", "Mean", ylabel=expression(bold(VDP[FA]* " "* "(%)")),
@@ -136,10 +142,10 @@ ggsave("./zR_plots_4ppr/Healthy_vs_CF_spir_FA_mdn_vdp_p.png", plot = fa_md[[2]],
 
 
 ##############################Box plot: N4 VDP (CF vs Healthy)
-n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
-                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=34, addp_eq=TRUE)
 n4_hr <- boxplt(combined_n4, "Category", "Hierarchical", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[3], py_pos=34, addp_eq=TRUE)
+n4_adp <- boxplt(combined_n4, "Category", "Adaptive", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
+                 xlabel="", ylimit=c(0, 40), bxfill= cbPalette[2], py_pos=34, addp_eq=TRUE)
 n4_pct <- boxplt(combined_n4, "Category", "Percentile", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
                  xlabel="", ylimit=c(0, 40), bxfill= cbPalette[4], py_pos=34, addp_eq=FALSE)
 n4_mn <- boxplt(combined_n4, "Category", "Mean", ylabel=expression(bold(VDP[N4]* " "* "(%)")),
