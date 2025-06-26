@@ -131,12 +131,14 @@ def load_select_defects(subj_dir, f_name, sub_dir1=None, sub_dir2=None):
 
 #%%Load images, masks, and defect arry and overlay defect array onto the image
 ##Path to directory containing subject folders # age_matched_spiral_healthy
+# PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_work"
+#               r"\vdp_analysis\analysis_comparisons\IRC740H_visit1_spiral_cf")
 PARENT_DIR = (r"C:\Users\HUSDQ4\OneDrive - cchmc\cincy_work\all_projects_data_work"
-              r"\vdp_analysis\analysis_comparisons\IRC740H_visit1_spiral_cf") 
+              r"\vdp_analysis\analysis_comparisons\age_matched_spiral_healthy") 
 ###Specify options
 ANALYSIS_MODE = "Batch" ##Single or Batch modes
 SUBJECT_ID = "IRC740H-028"
-CORR = "N4" # N4, FA
+CORR = "FA" # N4, FA
 SUBJ_DIR_NAMES = [r'^IRC740H-\d{3}$', r'^IRC740H-\d{3}c$', r'^ILD-HC-\d{3}$'] #
 
 ## Single subject analysis mode
@@ -224,6 +226,7 @@ elif ANALYSIS_MODE == "Batch":
                 th_ = load_select_defects(SUBJECT_DIR,
                                         f"{CORR}_corr_thresholding_defect_array.npy",
                                         f"{CORR}_corr_vdp_analysis", "thresholding_analysis")
+                ###Load Abood or Joey's segmented defect mask
                 defects_masks = ["img_defect_mask_jp.nii.gz", "img_defect_mask_ab.nii.gz"]
                 DEFECTS = None
                 for mask in defects_masks:
@@ -238,6 +241,7 @@ elif ANALYSIS_MODE == "Batch":
                 ###Load Riaz's segmented defect mask
                 rh_defects, _ = process_nifti(os.path.join(SUBJECT_DIR,
                                                 "img_defect_mask_rh.nii.gz"))
+                ##Combined defects
                 rdr_arr = rh_defects + DEFECTS == 2
                 MSK_file = load_select_defects(SUBJECT_DIR, "img_ventilation_mask.nii.gz")
                 IMG_file =  load_select_defects(SUBJECT_DIR, "img_ventilation.nii.gz")
