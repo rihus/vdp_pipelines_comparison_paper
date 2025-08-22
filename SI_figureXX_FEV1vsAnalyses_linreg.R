@@ -37,17 +37,17 @@ linreg_plt <- function(df_in, x_in, y_in, x_label, y_label, x_lim = c(0, 40),
   linreg <- ggpubr::ggscatter(df_in, x = x_in, y = y_in,
                               add = "reg.line",  # Add regression line
                               xlim = x_lim, ylim = y_lim,
-                              add.params = list(color = "#000000", size = 2, fill = "red", alpha = 0.15),
+                              add.params = list(color = "#000000", size = 1.5, fill = "red", alpha = 0.15),
                               conf.int = TRUE, fullrange = TRUE,
                               cor.method = corrltn_method,
-                              color = "#000000", shape = 19, size = 4, # Points color, shape and size
+                              color = "#000000", shape = 19, size = 3, # Points color, shape and size
                               ggtheme = theme_bw(),
                               font.x = c(22, "bold", "#000000"),
                               font.y = c(22, "bold", "#000000"),
                               font.tickslab = c(22, "bold", "#000000")) +
     xlab(x_label) + ylab(y_label) +
-    geom_abline(intercept = intercept, slope = slope,
-                linetype = "dotted", linewidth = 2, color = "#000000") +
+    # geom_abline(intercept = intercept, slope = slope,
+    #             linetype = "dotted", linewidth = 1.5, color = "#000000") +
     theme(legend.position = "none")
   
   # Calculate correlation coefficient (R) and p-value
@@ -73,9 +73,9 @@ linreg_plt <- function(df_in, x_in, y_in, x_label, y_label, x_lim = c(0, 40),
   linreg_txt <- linreg + 
     annotate("text", x = Inf, y = Inf, 
              label = paste(r_text, p_text, sep = "~`,`~"), 
-             hjust = 1.1, vjust = 2, color = "#000000", size = 6, parse = TRUE) +
+             hjust = 1.1, vjust = 1.5, color = "#000000", size = 6, parse = TRUE) +
     annotate("text", x = Inf, y = Inf, label = fit_eq, 
-             hjust = 1.1, vjust = 3.5, color = "#000000", size = 6, parse = TRUE)
+             hjust = 1.1, vjust = 3.0, color = "#000000", size = 6, parse = TRUE)
   
   print(linreg_txt)
   
@@ -88,88 +88,88 @@ N4_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May
 FA_spir_cf_vdps <- read.csv("./IRC740H_visit1_spiral_cf/vdp_analysis_results_May2025/FA_combined_vdps.csv")
 
 FEV1_rdr <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Reader",
-                      expression(bold(FEV1*" "*"(%)")), expression(bold(VDP[Reader]*" "*"(%)")),
-                      x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                      expression(bold(FEV[1]*" "*"(%)")), expression(bold(VDP[Reader]*" "*"(%)")),
+                      x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 
 N4_FEV1_hrar <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Hierarchical",
-                        expression(bold(FEV1*" "*"(%)")), expression(bold(Hierarchical*" "*VDP[N4]*" "*"(%)")),
-                        x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                        expression(bold(FEV[1]*" "*"(%)")), expression(bold(Hierarchical*" "*VDP[N4]*" "*"(%)")),
+                        x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 N4_FEV1_adpt <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Adaptive",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Adaptive*" "*VDP[N4]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Adaptive*" "*VDP[N4]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 N4_FEV1_prctl <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Percentile",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Percentile*" "*VDP[N4]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Percentile*" "*VDP[N4]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 N4_FEV1_mnlb <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Mean",
-                           expression(bold(FEV1*" "*"(%)")), expression(bold(Mean[LB]*" "*VDP[N4]*" "*"(%)")),
-                           x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                           expression(bold(FEV[1]*" "*"(%)")), expression(bold(Mean[LB]*" "*VDP[N4]*" "*"(%)")),
+                           x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 N4_FEV1_thrsh <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Thresholding",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Thresholding*" "*VDP[N4]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Thresholding*" "*VDP[N4]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 N4_FEV1_mnglb <- linreg_plt(N4_spir_cf_vdps, "FEV1", "Median",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Mean[GLB]*" "*VDP[N4]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Mean[GLB]*" "*VDP[N4]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 
 
 FA_FEV1_hrar <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Hierarchical",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Hierarchical*" "*VDP[FA]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Hierarchical*" "*VDP[FA]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 FA_FEV1_adpt <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Adaptive",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Adaptive*" "*VDP[FA]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Adaptive*" "*VDP[FA]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 FA_FEV1_prctl <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Percentile",
-                           expression(bold(FEV1*" "*"(%)")), expression(bold(Percentile*" "*VDP[FA]*" "*"(%)")),
-                           x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                           expression(bold(FEV[1]*" "*"(%)")), expression(bold(Percentile*" "*VDP[FA]*" "*"(%)")),
+                           x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 FA_FEV1_mnlb <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Mean",
-                          expression(bold(FEV1*" "*"(%)")), expression(bold(Mean[LB]*" "*VDP[FA]*" "*"(%)")),
-                          x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                          expression(bold(FEV[1]*" "*"(%)")), expression(bold(Mean[LB]*" "*VDP[FA]*" "*"(%)")),
+                          x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 FA_FEV1_thrsh <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Thresholding",
-                           expression(bold(FEV1*" "*"(%)")), expression(bold(Thresholding*" "*VDP[FA]*" "*"(%)")),
-                           x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                           expression(bold(FEV[1]*" "*"(%)")), expression(bold(Thresholding*" "*VDP[FA]*" "*"(%)")),
+                           x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 FA_FEV1_mnglb <- linreg_plt(FA_spir_cf_vdps, "FEV1", "Median",
-                           expression(bold(FEV1*" "*"(%)")), expression(bold(Mean[GLB]*" "*VDP[FA]*" "*"(%)")),
-                           x_lim=c(70, 150), y_lim=c(-10, 35), corrltn_method="pearson")
+                           expression(bold(FEV[1]*" "*"(%)")), expression(bold(Mean[GLB]*" "*VDP[FA]*" "*"(%)")),
+                           x_lim=c(70, 140), y_lim=c(-10, 35), corrltn_method="pearson")
 
 
 # #Save the plot as a png file in the specified directory
-ggsave("./zR_plots_4ppr/cf_FEV1_rdr_vdp_linreg_plain.png", plot = FEV1_rdr[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_rdr_vdp_linreg_p.png", plot = FEV1_rdr[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_rdr_vdp_linreg_plain.png", plot = FEV1_rdr[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_rdr_vdp_linreg_p.png", plot = FEV1_rdr[[2]], width = 4.8, height = 4.0, dpi = 300)
 
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_hrar_vdp_linreg_plain.png", plot = N4_FEV1_hrar[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_hrar_vdp_linreg_p.png", plot = N4_FEV1_hrar[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_hrar_vdp_linreg_plain.png", plot = N4_FEV1_hrar[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_hrar_vdp_linreg_p.png", plot = N4_FEV1_hrar[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_adpt_vdp_linreg_plain.png", plot = N4_FEV1_adpt[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_adpt_vdp_linreg_p.png", plot = N4_FEV1_adpt[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_adpt_vdp_linreg_plain.png", plot = N4_FEV1_adpt[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_adpt_vdp_linreg_p.png", plot = N4_FEV1_adpt[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_prctl_vdp_linreg_plain.png", plot = N4_FEV1_prctl[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_prctl_vdp_linreg_p.png", plot = N4_FEV1_prctl[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_prctl_vdp_linreg_plain.png", plot = N4_FEV1_prctl[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_prctl_vdp_linreg_p.png", plot = N4_FEV1_prctl[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnlb_vdp_linreg_plain.png", plot = N4_FEV1_mnlb[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnlb_vdp_linreg_p.png", plot = N4_FEV1_mnlb[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnlb_vdp_linreg_plain.png", plot = N4_FEV1_mnlb[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnlb_vdp_linreg_p.png", plot = N4_FEV1_mnlb[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_thrsh_vdp_linreg_plain.png", plot = N4_FEV1_thrsh[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_thrsh_vdp_linreg_p.png", plot = N4_FEV1_thrsh[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_thrsh_vdp_linreg_plain.png", plot = N4_FEV1_thrsh[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_thrsh_vdp_linreg_p.png", plot = N4_FEV1_thrsh[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnglb_vdp_linreg_plain.png", plot = N4_FEV1_mnglb[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnglb_vdp_linreg_p.png", plot = N4_FEV1_mnglb[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnglb_vdp_linreg_plain.png", plot = N4_FEV1_mnglb[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_N4_mnglb_vdp_linreg_p.png", plot = N4_FEV1_mnglb[[2]], width = 4.8, height = 4.0, dpi = 300)
 
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_hrar_vdp_linreg_plain.png", plot = FA_FEV1_hrar[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_hrar_vdp_linreg_p.png", plot = FA_FEV1_hrar[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_hrar_vdp_linreg_plain.png", plot = FA_FEV1_hrar[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_hrar_vdp_linreg_p.png", plot = FA_FEV1_hrar[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_adpt_vdp_linreg_plain.png", plot = FA_FEV1_adpt[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_adpt_vdp_linreg_p.png", plot = FA_FEV1_adpt[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_adpt_vdp_linreg_plain.png", plot = FA_FEV1_adpt[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_adpt_vdp_linreg_p.png", plot = FA_FEV1_adpt[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_prctl_vdp_linreg_plain.png", plot = FA_FEV1_prctl[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_prctl_vdp_linreg_p.png", plot = FA_FEV1_prctl[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_prctl_vdp_linreg_plain.png", plot = FA_FEV1_prctl[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_prctl_vdp_linreg_p.png", plot = FA_FEV1_prctl[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnlb_vdp_linreg_plain.png", plot = FA_FEV1_mnlb[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnlb_vdp_linreg_p.png", plot = FA_FEV1_mnlb[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnlb_vdp_linreg_plain.png", plot = FA_FEV1_mnlb[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnlb_vdp_linreg_p.png", plot = FA_FEV1_mnlb[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_thrsh_vdp_linreg_plain.png", plot = FA_FEV1_thrsh[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_thrsh_vdp_linreg_p.png", plot = FA_FEV1_thrsh[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_thrsh_vdp_linreg_plain.png", plot = FA_FEV1_thrsh[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_thrsh_vdp_linreg_p.png", plot = FA_FEV1_thrsh[[2]], width = 4.8, height = 4.0, dpi = 300)
 
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnglb_vdp_linreg_plain.png", plot = FA_FEV1_mnglb[[1]], width = 4.5, height = 3.7, dpi = 300)
-ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnglb_vdp_linreg_p.png", plot = FA_FEV1_mnglb[[2]], width = 4.5, height = 3.7, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnglb_vdp_linreg_plain.png", plot = FA_FEV1_mnglb[[1]], width = 4.8, height = 4.0, dpi = 300)
+ggsave("./zR_plots_4ppr/cf_FEV1_FA_mnglb_vdp_linreg_p.png", plot = FA_FEV1_mnglb[[2]], width = 4.8, height = 4.0, dpi = 300)
 
